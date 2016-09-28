@@ -104,12 +104,45 @@ def hangman(secretWord):
 
     Follows the other limitations detailed in the problem write-up.
     '''
-    pass
+    lettersGuessed = []
+    bodyParts = 8
+    mistakesMade = 0
+    delimiter = '-----------'
+
+    print('Welcome to the game, Hangman!')
+    print('I am thinking of a word that is {} letters long'.format(str(len(secretWord))))
+    print(delimiter)
+
+    while mistakesMade < bodyParts:
+        print('You have {} guesses left'.format(str(bodyParts - mistakesMade)))
+        print('Available letters: {}'.format(getAvailableLetters(lettersGuessed)))
+        guess = input('Please guess a letter: ').lower()
+
+        if guess not in secretWord and guess not in lettersGuessed:
+            mistakesMade += 1
+            lettersGuessed += [guess]
+            guessedWord = getGuessedWord(secretWord, lettersGuessed)
+            print('Oops! That letter is not in my word: ', guessedWord)
+        else:
+            if guess in lettersGuessed:
+                guessedWord = getGuessedWord(secretWord, lettersGuessed)
+                print('Oops! You’ve already guessed that letter: ', guessedWord)
+            else:
+                lettersGuessed += [guess]
+                guessedWord = getGuessedWord(secretWord, lettersGuessed)
+                print('Good guess: ', guessedWord)
+                if isWordGuessed(secretWord, lettersGuessed):
+                    print(delimiter)
+                    print('Congratulations, you won!')
+                    return None
+        print('------------')
+    print('Sorry, you ran out of guesses. The word was else.: {}'.format(secretWord))
+    return None
 
 
 # When you've completed your hangman function, uncomment these two lines
 # and run this file to test! (hint: you might want to pick your own
 # secretWord while you're testing)
 
-# secretWord = chooseWord(wordlist).lower()
-# hangman(secretWord)
+secretWord = chooseWord(wordlist).lower()
+hangman(secretWord)
