@@ -76,7 +76,12 @@ def getAvailableLetters(lettersGuessed):
     returns: string, comprised of letters that represents what letters have not
       yet been guessed.
     '''
-    pass
+    abc = 'abcdefghijklmnopqrstuvwxyz'
+    available_letters = ''
+    for char in abc:
+        if char not in lettersGuessed:
+            available_letters += char
+    return available_letters
 
 
 def hangman(secretWord):
